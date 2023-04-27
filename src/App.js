@@ -28,14 +28,18 @@ class App extends Component {
       if (matchedProduct === undefined) {
         return {cartList: [...cartList, product]}
       }
-      const updatedProduct = {
-        ...matchedProduct,
-        quantity: matchedProduct.quantity + product.quantity,
-      }
-      const filteredCartList = cartList.filter(
-        eachItem => eachItem.id !== product.id,
-      )
-      return {cartList: [...filteredCartList, updatedProduct]}
+
+      const updatedCartList = cartList.map(eachItem => {
+        if (eachItem.id === product.id) {
+          return {
+            ...eachItem,
+            quantity: eachItem.quantity + product.quantity,
+          }
+        }
+        return eachItem
+      })
+
+      return {cartList: updatedCartList}
     })
   }
 
